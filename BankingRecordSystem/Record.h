@@ -9,13 +9,20 @@
 class Record
 {
 public:
+	struct AccountRecord {
+		std::string account_number;
+		std::string first_name;
+		std::string last_name;
+		int64_t account_balance;
+	};
+
 	void AddRecordToFile();
 	void ShowRecordsInFile();
 	void SearchRecordInFile();
 	void UpdateExistingRecord();
 	void DeleteExistingRecord();
 	void DeleteRecordFile();
-	std::vector<std::string> GetRecordsData();
+	std::vector<AccountRecord> GetRecordsData();
 
 	Record()
 	{

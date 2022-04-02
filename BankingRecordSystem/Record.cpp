@@ -32,7 +32,7 @@ void Record::AddRecordToFile()
 // Display every record in records.csv
 void Record::ShowRecordsInFile()
 {
-	std::vector<std::string> records_data = GetRecordsData();
+	std::vector<AccountRecord> records_data = GetRecordsData();
 
 	std::cout << "***All records in file***\n";
 	
@@ -112,7 +112,7 @@ void Record::DeleteExistingRecord()
 	PAUSE;
 }
 
-std::vector<std::string> Record::GetRecordsData()
+std::vector<Record::AccountRecord> Record::GetRecordsData()
 {
 	std::ifstream records;
 	std::string line, temp_string;
