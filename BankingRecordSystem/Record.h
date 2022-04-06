@@ -10,10 +10,10 @@ class Record
 {
 public:
 	struct AccountRecord {
-		std::string account_number;
-		std::string first_name;
-		std::string last_name;
-		int64_t account_balance;
+		std::string account_number = "";
+		std::string first_name = "";
+		std::string last_name = "";
+		int account_balance = 0;
 	};
 
 	void AddRecordToFile();
@@ -26,10 +26,10 @@ public:
 
 	Record()
 	{
-		account_number_ = "Unknown";
+		/*account_number_ = "Unknown";
 		first_name_ = "Unknown";
 		last_name_ = "Unknown";
-		account_balance_ = "Unknown";
+		account_balance_ = "Unknown";*/
 	}
 
 	~Record() {};

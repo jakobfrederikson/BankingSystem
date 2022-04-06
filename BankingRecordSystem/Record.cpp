@@ -36,15 +36,13 @@ void Record::ShowRecordsInFile()
 
 	std::cout << "***All records in file***\n";
 	
-	for (int i = 0; i < records_data.size();)
+	for (int i = 0; i < records_data.size(); i++)
 	{
-		std::cout << "Account number:  " << records_data[i] << "\n";
-		std::cout << "First name:      " << records_data[i + 1] << "\n";
-		std::cout << "Last name:       " << records_data[i + 2] << "\n";
-		std::cout << "Account balance: " << records_data[i + 3] << "\n";
+		std::cout << "Account number:  " << records_data[i].account_number << "\n";
+		std::cout << "First name:      " << records_data[i].first_name << "\n";
+		std::cout << "Last name:       " << records_data[i].last_name << "\n";
+		std::cout << "Account balance: " << records_data[i].account_balance << "\n";
 		std::cout << "\n";
-
-		i = i + 4;
 	}
 
 	std::cout << "\n";
@@ -112,11 +110,15 @@ void Record::DeleteExistingRecord()
 	PAUSE;
 }
 
+// Get ALL account records
 std::vector<Record::AccountRecord> Record::GetRecordsData()
 {
 	std::ifstream records;
 	std::string line, temp_string;
-	std::vector<std::string>* v_ptr = new std::vector<std::string>;
+	struct AccountRecord account;
+	const struct AccountRecord empty_account;
+	std::vector<Record::AccountRecord> account_records;
+	int wait_to_three = 0;
 	int column = 0;
 
 	records.open("records.csv");
@@ -130,11 +132,40 @@ std::vector<Record::AccountRecord> Record::GetRecordsData()
 			{
 				std::getline(ss, temp_string, ',');
 
-				// We say if 'column' is above 3 so it skips the first line of the csv file
-				if (column > 3)
-					(*v_ptr).push_back(temp_string);
+				// We say if 'column' is greater than 3 so it skips the first line of the csv file
+				if (wait_to_three > 3)
+				{
+					if (column == 0)
+					{
+						account.account_number = temp_string;
+						column++;
+					}
+					else if (column == 1)
+					{
+						account.first_name = temp_string;
+						column++;
+					}						
+					else if (column == 2)
+					{
+						account.last_name = temp_string;
+						column++;
+					}						
+					else if (column == 3)
+					{
+						account.account_balance = stoi(temp_string);
+						account_records.push_back(account);
 
-				column++;
+						// Reset, 'clear' the account struct
+						account = empty_account;
+
+						// Reset the column count
+						column = 0;
+					}
+				}
+				else
+				{
+					wait_to_three++;
+				}
 			}
 		}
 	}
@@ -142,7 +173,7 @@ std::vector<Record::AccountRecord> Record::GetRecordsData()
 		std::cout << "\nError opening records.csv, check file is not already open.\n";
 	
 	records.close();
-	return *v_ptr;
+	return account_records;
 }
 
 void Record::DeleteRecordFile()
