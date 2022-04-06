@@ -6,6 +6,7 @@
 // Gets user input for bank account and adds it to records.csv
 void Record::AddRecordToFile()
 {
+	// TODO: Don't let someone add an account number that already exists.
 	std::cin.ignore();
 	std::cout << "***Add record to file***\n\n";
 
@@ -76,7 +77,7 @@ void Record::SearchRecordInFile()
 		}
 		catch (...)
 		{
-			std::cout << "\nError: Please enter an integer between 1-6.\n\n";
+			std::cout << "\nUnknown error.\n\n";
 
 			// Clear the input stream
 			std::cin.clear();
@@ -90,18 +91,12 @@ void Record::SearchRecordInFile()
 void Record::UpdateExistingRecord()
 {
 	std::cout << "***Update Existing Record***\n\n";
-	std::cout << "There are ___ records in the file\n";
 	// show records
-	std::cout << "Enter account number to edit: ";
-	// std::cin account_num_?
+	Record::ShowRecordsInFile();
 
-	// [1] Account number: #;
-	// [2] First name: "asdf";
-	// [3] Last name: "asdf";
-	// [4] Current balance: #;
-	
-	std::cout << "Enter a line's number to edit: ";
-	// std::cin >> num;
+	std::cout << "Enter an account number to edit: ";
+
+	PAUSE;
 }
 
 void Record::DeleteExistingRecord()
